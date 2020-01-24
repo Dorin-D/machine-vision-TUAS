@@ -3,10 +3,6 @@
  *
  * usage: python Contours.py <filename> <threshold>
 '''
-## vorherige kernel size von 9 ist ein bisschen zu wenig um das hintergrundrauschen vollständig zu ignorieren
-# Contours.py mousesliceblur.png 50 //hintergrundrauschen noch zu intensiv
-##todo alle gefundenen konturen, welche nur eine größe von 100 oder weniger pixel haben ignorieren
-
 import cv2, sys
 
 # read command-line arguments
