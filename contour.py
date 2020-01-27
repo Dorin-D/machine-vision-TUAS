@@ -37,7 +37,7 @@ for (i, c) in enumerate(contours):
 	if len(c) > 200:
 		contours_size_filter.append(contours[i])
 
-for (i, c) in enumerate(contours1):
+for (i, c) in enumerate(contours):
     print("\tSize of contour after length filter %d: %d" % (i, len(c)))
 
 # draw contours over original image
@@ -46,6 +46,14 @@ cv2.drawContours(image = image,
     contourIdx = -1, 
     color = (0, 0, 255), 
     thickness = 5)
+
+imagetoslice = image
+
+for (i, c) in enumerate(contours):
+    (x, y, w, h) = cv2.boundingRect(c)
+    crop_img = imagetoslice[y:y+h, x:x+w]
+
+    cv2.imwrite("output/"+str(i)+".tif", img = crop_img)
 
 # display original image with contours
 cv2.namedWindow(winname = "output", flags = cv2.WINDOW_NORMAL)
