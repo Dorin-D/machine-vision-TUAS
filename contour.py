@@ -47,11 +47,9 @@ cv2.drawContours(image = image,
     color = (0, 0, 255), 
     thickness = 5)
 
-imagetoslice = image
-
 for (i, c) in enumerate(contours):
     (x, y, w, h) = cv2.boundingRect(c)
-    crop_img = imagetoslice[y:y+h, x:x+w]
+    crop_img = image[y:y+h, x:x+w]
 
     cv2.imwrite("output/"+str(i)+".tif", img = crop_img)
 
