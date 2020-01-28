@@ -10,6 +10,9 @@ filename = sys.argv[1]
 t = int(sys.argv[2])
 
 image = cv2.imread(filename = filename)
+image_blurred = cv2.imread(filename = filename)
+#image_unblurred = cv2.imread(filename = filename_unblurred)
+
 
 # create binary image
 gray = cv2.cvtColor(src = image, code = cv2.COLOR_BGR2GRAY)
@@ -28,18 +31,20 @@ blur = cv2.GaussianBlur(src = gray,
 
 # print table of contours and sizes unfiltered by size
 print("Found %d objects." % len(contours))
+'''
 for (i, c) in enumerate(contours):
     print("\tSize of contour before length filter %d: %d" % (i, len(c)))
-
+'''
 #print table of contours filtered by size
 contours_size_filter = []
 for (i, c) in enumerate(contours):
 	if len(c) > 200:
 		contours_size_filter.append(contours[i])
-
+print("Trimmed down to %d objects." % len(contours_size_filter))
+'''
 for (i, c) in enumerate(contours):
     print("\tSize of contour after length filter %d: %d" % (i, len(c)))
-
+'''
 # draw contours over original image
 cv2.drawContours(image = image, 
     contours = contours_size_filter, 
@@ -47,9 +52,9 @@ cv2.drawContours(image = image,
     color = (0, 0, 255), 
     thickness = 5)
 
-for (i, c) in enumerate(contours):
+for (i, c) in enumerate(contours_size_filter):
     (x, y, w, h) = cv2.boundingRect(c)
-    crop_img = image[y:y+h, x:x+w]
+    crop_img = image_blurred[y:y+h, x:x+w]
 
     cv2.imwrite("output/"+str(i)+".tif", img = crop_img)
 
@@ -58,4 +63,4 @@ cv2.namedWindow(winname = "output", flags = cv2.WINDOW_NORMAL)
 cv2.imshow(winname = "output", mat = image)
 cv2.waitKey(delay = 0)
 
-cv2.imwrite("imagewithcontours.tif", img = image)
+#cv2.imwrite("imagewithcontours.tif", img = image)
