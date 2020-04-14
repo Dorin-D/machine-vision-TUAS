@@ -88,7 +88,7 @@ def contour_picture(filename, outline, blackBG, t, outputName):
 	quicksort(minXPixels, 0, len(minXPixels)-1, contours_size_filter)
 	
 	# draw contours over original image according to outline parameter
-	#0 = outline only, 1 = content only, 2 = content and outline
+	#0 = outline only, 1 = content only, 2 = content and outline, outlines being in a separate folder
 	if outline == 0:
 		image[np.where((image>[0,0,0]).all(axis=2))] = [0,0,0]
 		cv2.drawContours(image = image, 
@@ -99,6 +99,17 @@ def contour_picture(filename, outline, blackBG, t, outputName):
 	elif outline == 1:
 		pass
 	elif outline == 2:
+		#creating folders for the separate outline output
+		if not os.path.exists(outputName):
+			os.makedirs(outputName)
+		if not os.path.exists(outputName+"/outlines"):
+			os.makedirs(outputName+"/outlines")
+		for (i, c) in enumerate(contours_size_filter):
+			(x, y, w, h) = cv2.boundingRect(c)
+			crop_img = image[y:y+h, x:x+w]
+			cv2.imwrite(outputName+"/outlines/"+str(i)+".tif", img = crop_img)
+
+		image[np.where((image>[0,0,0]).all(axis=2))] = [0,0,0]
 		cv2.drawContours(image = image, 
 		contours = contours_size_filter, 
 		contourIdx = -1, 

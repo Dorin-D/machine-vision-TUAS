@@ -5,7 +5,6 @@ import blurpicture
 import contour
 import cv2
 
-##TO DO
 
 class App(QWidget):
 
