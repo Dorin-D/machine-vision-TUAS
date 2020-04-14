@@ -102,12 +102,12 @@ def contour_picture(filename, outline, blackBG, t, outputName):
 		#creating folders for the separate outline output
 		if not os.path.exists(outputName):
 			os.makedirs(outputName)
-		if not os.path.exists(outputName+"/outlines"):
-			os.makedirs(outputName+"/outlines")
+		if not os.path.exists(outputName+"/content"):
+			os.makedirs(outputName+"/content")
 		for (i, c) in enumerate(contours_size_filter):
 			(x, y, w, h) = cv2.boundingRect(c)
 			crop_img = image[y:y+h, x:x+w]
-			cv2.imwrite(outputName+"/outlines/"+str(i)+".tif", img = crop_img)
+			cv2.imwrite(outputName+"/content/"+str(i)+".tif", img = crop_img)
 
 		image[np.where((image>[0,0,0]).all(axis=2))] = [0,0,0]
 		cv2.drawContours(image = image, 
